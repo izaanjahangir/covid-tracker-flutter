@@ -1,5 +1,6 @@
 import 'package:covid_tracker/components/app_drawer/app_drawer.dart';
 import 'package:covid_tracker/components/app_header/app_header.dart';
+import 'package:covid_tracker/components/pie_chart/pie_chart.dart';
 import 'package:covid_tracker/utils/responsive.dart';
 import "package:flutter/material.dart";
 
@@ -36,7 +37,7 @@ class Home extends StatelessWidget {
                 ),
               Expanded(
                 child: Column(
-                  children: [AppHeader()],
+                  children: [AppHeader(), PieChart()],
                 ),
               )
             ],
