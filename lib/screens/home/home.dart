@@ -1,4 +1,5 @@
 import 'package:covid_tracker/components/app_drawer/app_drawer.dart';
+import 'package:covid_tracker/components/app_header/app_header.dart';
 import 'package:covid_tracker/utils/responsive.dart';
 import "package:flutter/material.dart";
 
@@ -33,8 +34,10 @@ class Home extends StatelessWidget {
                   width: drawerWidth > 250 ? 250 : drawerWidth,
                   child: AppDrawer(),
                 ),
-              Container(
-                child: Text("Home"),
+              Expanded(
+                child: Column(
+                  children: [AppHeader()],
+                ),
               )
             ],
           ),
