@@ -1,5 +1,6 @@
 import 'package:covid_tracker/components/app_drawer/app_drawer.dart';
 import 'package:covid_tracker/components/app_header/app_header.dart';
+import 'package:covid_tracker/components/line_chart/line_chart.dart';
 import 'package:covid_tracker/components/pie_chart/pie_chart.dart';
 import 'package:covid_tracker/utils/responsive.dart';
 import "package:flutter/material.dart";
@@ -36,14 +37,46 @@ class Home extends StatelessWidget {
                   child: AppDrawer(),
                 ),
               Expanded(
-                child: Column(
-                  children: [AppHeader(), PieChart()],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      AppHeader(),
+                      Responsive(
+                          mobile: MobileView(),
+                          tablet: DesktopView(),
+                          desktop: DesktopView())
+                    ],
+                  ),
                 ),
               )
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class DesktopView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [PieChart(), Expanded(child: LineChart())],
+    );
+  }
+}
+
+class MobileView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        PieChart(),
+        SizedBox(
+          height: 30,
+        ),
+        LineChart()
+      ],
     );
   }
 }
