@@ -50,7 +50,9 @@ class _HomeState extends State<Home> {
               Expanded(
                 child: Column(
                   children: [
-                    AppHeader(),
+                    AppHeader(
+                      label: "Pakistan (1000)",
+                    ),
                     Expanded(child: LayoutBuilder(builder:
                         (BuildContext context, BoxConstraints constraints) {
                       return SingleChildScrollView(
