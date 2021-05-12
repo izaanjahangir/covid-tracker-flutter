@@ -1,9 +1,9 @@
 import 'package:covid_tracker/components/app_drawer/app_drawer.dart';
 import 'package:covid_tracker/components/app_header/app_header.dart';
 import 'package:covid_tracker/components/line_chart/line_chart.dart';
+import 'package:covid_tracker/components/loading/loading.dart';
 import 'package:covid_tracker/components/pie_chart/pie_chart.dart';
 import 'package:covid_tracker/config/constants.dart';
-import 'package:covid_tracker/config/theme_colors.dart';
 import 'package:covid_tracker/models/country.dart';
 import 'package:covid_tracker/screens/home/components/no_country_selected.dart';
 import 'package:covid_tracker/utils/responsive.dart';
@@ -39,6 +39,26 @@ class _HomeState extends State<Home> {
       );
     }
 
+    Widget getContent() {
+      return LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: constraints.maxHeight),
+            child: Container(
+              width: double.infinity,
+              child: selectedCountry != null
+                  ? Responsive(
+                      mobile: MobileView(),
+                      tablet: DesktopView(),
+                      desktop: DesktopView())
+                  : NoCountrySelected(),
+            ),
+          ),
+        );
+      });
+    }
+
     return SafeArea(
       child: Scaffold(
         drawer: Responsive.isDesktop(context) ? null : getAppDrawer(),
@@ -53,24 +73,8 @@ class _HomeState extends State<Home> {
                     AppHeader(
                       label: "Pakistan (1000)",
                     ),
-                    Expanded(child: LayoutBuilder(builder:
-                        (BuildContext context, BoxConstraints constraints) {
-                      return SingleChildScrollView(
-                        child: ConstrainedBox(
-                          constraints:
-                              BoxConstraints(minHeight: constraints.maxHeight),
-                          child: Container(
-                            width: double.infinity,
-                            child: selectedCountry != null
-                                ? Responsive(
-                                    mobile: MobileView(),
-                                    tablet: DesktopView(),
-                                    desktop: DesktopView())
-                                : NoCountrySelected(),
-                          ),
-                        ),
-                      );
-                    }))
+                    Expanded(
+                        child: Loading(loading: false, child: getContent())),
                   ],
                 ),
               )
