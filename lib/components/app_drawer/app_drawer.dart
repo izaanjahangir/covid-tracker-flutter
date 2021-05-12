@@ -1,5 +1,4 @@
 import 'package:covid_tracker/components/app_drawer/app_drawer_item.dart';
-import 'package:covid_tracker/config/constants.dart';
 import 'package:covid_tracker/models/country.dart';
 import "package:flutter/material.dart";
 import "package:covid_tracker/config/theme_colors.dart";

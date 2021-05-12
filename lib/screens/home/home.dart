@@ -3,7 +3,9 @@ import 'package:covid_tracker/components/app_header/app_header.dart';
 import 'package:covid_tracker/components/line_chart/line_chart.dart';
 import 'package:covid_tracker/components/pie_chart/pie_chart.dart';
 import 'package:covid_tracker/config/constants.dart';
+import 'package:covid_tracker/config/theme_colors.dart';
 import 'package:covid_tracker/models/country.dart';
+import 'package:covid_tracker/screens/home/components/no_country_selected.dart';
 import 'package:covid_tracker/utils/responsive.dart';
 import "package:flutter/material.dart";
 
@@ -24,6 +26,7 @@ class _HomeState extends State<Home> {
     final size = MediaQuery.of(context).size;
     final double drawerWidth = size.width;
     final List<Country> countries = Constants.supportedCountries;
+    Country selectedCountry;
 
     Widget getAppDrawer() {
       return Container(
@@ -45,16 +48,28 @@ class _HomeState extends State<Home> {
             children: [
               if (Responsive.isDesktop(context)) getAppDrawer(),
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      AppHeader(),
-                      Responsive(
-                          mobile: MobileView(),
-                          tablet: DesktopView(),
-                          desktop: DesktopView())
-                    ],
-                  ),
+                child: Column(
+                  children: [
+                    AppHeader(),
+                    Expanded(child: LayoutBuilder(builder:
+                        (BuildContext context, BoxConstraints constraints) {
+                      return SingleChildScrollView(
+                        child: ConstrainedBox(
+                          constraints:
+                              BoxConstraints(minHeight: constraints.maxHeight),
+                          child: Container(
+                            width: double.infinity,
+                            child: selectedCountry != null
+                                ? Responsive(
+                                    mobile: MobileView(),
+                                    tablet: DesktopView(),
+                                    desktop: DesktopView())
+                                : NoCountrySelected(),
+                          ),
+                        ),
+                      );
+                    }))
+                  ],
                 ),
               )
             ],
