@@ -1,8 +1,14 @@
 import 'package:covid_tracker/components/app_drawer/app_drawer_item.dart';
+import 'package:covid_tracker/config/constants.dart';
+import 'package:covid_tracker/models/country.dart';
 import "package:flutter/material.dart";
 import "package:covid_tracker/config/theme_colors.dart";
 
 class AppDrawer extends StatelessWidget {
+  final List<Country> countries;
+
+  AppDrawer({this.countries});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,9 +32,13 @@ class AppDrawer extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      AppDrawerItem(),
-                      AppDrawerItem(active: true),
-                      AppDrawerItem(),
+                      ...countries
+                          .asMap()
+                          .entries
+                          .map((e) => AppDrawerItem(
+                                country: e.value,
+                              ))
+                          .toList()
                     ],
                   ),
                 )),

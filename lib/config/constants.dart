@@ -1,7 +1,7 @@
 import 'package:covid_tracker/models/country.dart';
 
 class Constants {
-  static final flag = [
+  static final supportedCountries = [
     Country(name: "Pakistan", code: "PAK", flag: "assets/icons/pakistan.svg"),
     Country(name: "United Kingdom", code: "GBR", flag: "assets/icons/uk.svg"),
     Country(name: "United States", code: "USA", flag: "assets/icons/us.svg"),

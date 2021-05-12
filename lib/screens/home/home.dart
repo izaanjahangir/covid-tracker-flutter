@@ -2,6 +2,8 @@ import 'package:covid_tracker/components/app_drawer/app_drawer.dart';
 import 'package:covid_tracker/components/app_header/app_header.dart';
 import 'package:covid_tracker/components/line_chart/line_chart.dart';
 import 'package:covid_tracker/components/pie_chart/pie_chart.dart';
+import 'package:covid_tracker/config/constants.dart';
+import 'package:covid_tracker/models/country.dart';
 import 'package:covid_tracker/utils/responsive.dart';
 import "package:flutter/material.dart";
 
@@ -11,31 +13,37 @@ class SalesData {
   final double sales;
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final double drawerWidth = size.width;
+    final List<Country> countries = Constants.supportedCountries;
+
+    Widget getAppDrawer() {
+      return Container(
+        width: drawerWidth > 250 ? 250 : drawerWidth,
+        child: Drawer(
+          child: AppDrawer(
+            countries: countries,
+          ),
+        ),
+      );
+    }
 
     return SafeArea(
       child: Scaffold(
-        drawer: Responsive.isDesktop(context)
-            ? null
-            : Container(
-                width: drawerWidth > 250 ? 250 : drawerWidth,
-                child: Drawer(
-                  child: AppDrawer(),
-                ),
-              ),
+        drawer: Responsive.isDesktop(context) ? null : getAppDrawer(),
         body: Container(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (Responsive.isDesktop(context))
-                Container(
-                  width: drawerWidth > 250 ? 250 : drawerWidth,
-                  child: AppDrawer(),
-                ),
+              if (Responsive.isDesktop(context)) getAppDrawer(),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
