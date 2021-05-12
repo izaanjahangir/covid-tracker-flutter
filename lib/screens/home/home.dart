@@ -105,7 +105,20 @@ class _HomeState extends State<Home> {
       return Container(
         width: drawerWidth > 250 ? 250 : drawerWidth,
         child: Drawer(
-          child: AppDrawer(countries: countries, loading: isLoadingCountries),
+          child: AppDrawer(
+            countries: countries,
+            loading: isLoadingCountries,
+            selectedCountry: selectedCountry,
+            onCountrySelect: (Country c) {
+              if (!Responsive.isDesktop(context)) {
+                Navigator.of(context).pop();
+              }
+
+              setState(() {
+                selectedCountry = c;
+              });
+            },
+          ),
         ),
       );
     }

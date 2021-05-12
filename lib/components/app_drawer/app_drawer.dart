@@ -7,8 +7,18 @@ import "package:covid_tracker/config/theme_colors.dart";
 class AppDrawer extends StatelessWidget {
   final List<Country> countries;
   final bool loading;
+  final Function onCountrySelect;
+  final Country selectedCountry;
 
-  AppDrawer({this.countries, this.loading});
+  AppDrawer(
+      {this.countries,
+      this.loading,
+      @required this.onCountrySelect,
+      this.selectedCountry});
+
+  void handleTap(Country c) {
+    onCountrySelect(c);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +56,9 @@ class AppDrawer extends StatelessWidget {
                           .asMap()
                           .entries
                           .map((e) => AppDrawerItem(
+                                onTap: handleTap,
+                                active: selectedCountry != null &&
+                                    selectedCountry.code == e.value.code,
                                 country: e.value,
                               ))
                           .toList()

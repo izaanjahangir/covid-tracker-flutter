@@ -6,8 +6,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 class AppDrawerItem extends StatelessWidget {
   final bool active;
   final Country country;
+  final Function onTap;
 
-  AppDrawerItem({this.active = false, this.country});
+  AppDrawerItem({this.active = false, this.country, @required this.onTap});
+
+  void handleTap() {
+    onTap(country);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,7 @@ class AppDrawerItem extends StatelessWidget {
         child: InkWell(
           splashColor: ThemeColors.white,
           borderRadius: BorderRadius.circular(20),
-          onTap: () {},
+          onTap: handleTap,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Row(
