@@ -28,6 +28,24 @@ class _HomeState extends State<Home> {
     final List<Country> countries = Constants.supportedCountries;
     Country selectedCountry;
 
+    Widget getDesktopView() {
+      return Row(
+        children: [PieChart(), Expanded(child: LineChart())],
+      );
+    }
+
+    Widget getMobileView() {
+      return Column(
+        children: [
+          PieChart(),
+          SizedBox(
+            height: 30,
+          ),
+          LineChart()
+        ],
+      );
+    }
+
     Widget getAppDrawer() {
       return Container(
         width: drawerWidth > 250 ? 250 : drawerWidth,
@@ -49,9 +67,9 @@ class _HomeState extends State<Home> {
               width: double.infinity,
               child: selectedCountry != null
                   ? Responsive(
-                      mobile: MobileView(),
-                      tablet: DesktopView(),
-                      desktop: DesktopView())
+                      mobile: getMobileView(),
+                      tablet: getDesktopView(),
+                      desktop: getDesktopView())
                   : NoCountrySelected(),
             ),
           ),
@@ -82,30 +100,6 @@ class _HomeState extends State<Home> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class DesktopView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [PieChart(), Expanded(child: LineChart())],
-    );
-  }
-}
-
-class MobileView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        PieChart(),
-        SizedBox(
-          height: 30,
-        ),
-        LineChart()
-      ],
     );
   }
 }
