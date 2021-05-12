@@ -6,9 +6,17 @@ class Loading extends StatelessWidget {
   final String label;
   final bool loading;
   final Widget child;
+  final Color color;
+  final double iconSize;
+  final double labelFontSize;
 
   Loading(
-      {this.label = "Please wait", this.loading = true, @required this.child});
+      {this.color = ThemeColors.grey,
+      this.label = "Please wait",
+      this.iconSize = 100,
+      this.labelFontSize = 22,
+      this.loading = true,
+      @required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +25,15 @@ class Loading extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SpinKitHourGlass(
-            color: ThemeColors.grey,
-            size: 100,
+            color: color,
+            size: iconSize,
           ),
           SizedBox(
             height: 20,
           ),
           Text(
             label,
-            style: TextStyle(color: ThemeColors.grey, fontSize: 22),
+            style: TextStyle(color: color, fontSize: labelFontSize),
           )
         ],
       );

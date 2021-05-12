@@ -1,12 +1,14 @@
 import 'package:covid_tracker/components/app_drawer/app_drawer_item.dart';
+import 'package:covid_tracker/components/loading/loading.dart';
 import 'package:covid_tracker/models/country.dart';
 import "package:flutter/material.dart";
 import "package:covid_tracker/config/theme_colors.dart";
 
 class AppDrawer extends StatelessWidget {
   final List<Country> countries;
+  final bool loading;
 
-  AppDrawer({this.countries});
+  AppDrawer({this.countries, this.loading});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +27,19 @@ class AppDrawer extends StatelessWidget {
             )),
           ),
           Expanded(
-            child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: SingleChildScrollView(
+              child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+              return SingleChildScrollView(
+                  child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Loading(
+                  color: ThemeColors.white,
+                  labelFontSize: 18,
+                  label: "Getting countries",
+                  iconSize: 60,
+                  loading: loading,
                   child: Column(
                     children: [
                       ...countries
@@ -40,8 +51,10 @@ class AppDrawer extends StatelessWidget {
                           .toList()
                     ],
                   ),
-                )),
-          )
+                ),
+              ));
+            }),
+          ))
         ],
       ),
     );

@@ -6,6 +6,7 @@ import 'package:covid_tracker/components/pie_chart/pie_chart.dart';
 import 'package:covid_tracker/config/constants.dart';
 import 'package:covid_tracker/models/country.dart';
 import 'package:covid_tracker/screens/home/components/no_country_selected.dart';
+import 'package:covid_tracker/utils/api.dart';
 import 'package:covid_tracker/utils/responsive.dart';
 import "package:flutter/material.dart";
 
@@ -21,12 +22,66 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<Country> countries = [];
+  Country selectedCountry;
+  bool isLoadingCountries = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchData();
+  }
+
+  void fetchData() async {
+    try {
+      setState(() {
+        isLoadingCountries = true;
+      });
+
+      List<Country> countriesData = [];
+
+      dynamic data = await Api.fetchCountForAllCountries();
+      List<dynamic> result = data["result"];
+
+      result.forEach((element) {
+        String currentCode = element.keys.first;
+
+        int foundIndex = Constants.supportedCountries
+            .indexWhere((element) => element.code == currentCode);
+
+        if (foundIndex != -1) {
+          final Country foundCountry = Constants.supportedCountries[foundIndex];
+          final Map countryData = element[currentCode];
+
+          final Country newCountry = Country(
+              name: foundCountry.name,
+              flag: foundCountry.flag,
+              code: foundCountry.code,
+              recovered: countryData["recovered"],
+              deaths: countryData["deaths"],
+              confirmed: countryData["confirmed"]);
+
+          countriesData.add(newCountry);
+        }
+      });
+
+      setState(() {
+        countries = countriesData;
+      });
+    } catch (e) {
+      print("Some error => " + e.toString());
+    }
+
+    setState(() {
+      isLoadingCountries = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final double drawerWidth = size.width;
-    final List<Country> countries = Constants.supportedCountries;
-    Country selectedCountry;
 
     Widget getDesktopView() {
       return Row(
@@ -50,9 +105,7 @@ class _HomeState extends State<Home> {
       return Container(
         width: drawerWidth > 250 ? 250 : drawerWidth,
         child: Drawer(
-          child: AppDrawer(
-            countries: countries,
-          ),
+          child: AppDrawer(countries: countries, loading: isLoadingCountries),
         ),
       );
     }
