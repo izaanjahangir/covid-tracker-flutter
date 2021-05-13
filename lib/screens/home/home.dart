@@ -24,7 +24,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Country> countries = [];
-  Map<String, List> historicData;
+  List<Map<String, dynamic>> historicData;
   Country selectedCountry;
   bool isLoadingCountries = false;
   bool isDataLoading = false;
@@ -93,11 +93,11 @@ class _HomeState extends State<Home> {
       List<String> dates = result.keys.toList();
 
       List<Map<String, dynamic>> casesData = dates.map((e) {
-        return {"confirmed": result[e]["confirmed"]};
+        return {"date": e, "confirmed": result[e]["confirmed"]};
       }).toList();
 
       setState(() {
-        historicData = {"dates": dates, "data": casesData};
+        historicData = casesData;
       });
     } catch (e) {
       print("Some error => " + e.toString());
