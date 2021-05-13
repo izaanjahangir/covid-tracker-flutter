@@ -2,6 +2,10 @@ import "package:flutter/material.dart";
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class LineChart extends StatelessWidget {
+  final Map<String, List> data;
+
+  LineChart({@required this.data});
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;

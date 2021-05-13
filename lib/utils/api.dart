@@ -10,7 +10,20 @@ class Api {
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
-      throw Exception('Failed to load album');
+      throw Exception('Failed to load countries');
+    }
+  }
+
+  static dynamic fetchCountryHistoricData(String countryCode) async {
+    final Uri uri =
+        Uri.parse("https://covidapi.info/api/v1/country/$countryCode");
+
+    final response = await http.get(uri);
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load data');
     }
   }
 }

@@ -24,8 +24,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Country> countries = [];
+  Map<String, List> historicData;
   Country selectedCountry;
   bool isLoadingCountries = false;
+  bool isDataLoading = false;
 
   @override
   void initState() {
@@ -79,6 +81,33 @@ class _HomeState extends State<Home> {
     });
   }
 
+  void fetchHistoricData(Country selectedCountry) async {
+    try {
+      setState(() {
+        isDataLoading = true;
+      });
+
+      dynamic data = await Api.fetchCountryHistoricData(selectedCountry.code);
+      Map<String, dynamic> result = data["result"];
+
+      List<String> dates = result.keys.toList();
+
+      List<Map<String, dynamic>> casesData = dates.map((e) {
+        return {"confirmed": result[e]["confirmed"]};
+      }).toList();
+
+      setState(() {
+        historicData = {"dates": dates, "data": casesData};
+      });
+    } catch (e) {
+      print("Some error => " + e.toString());
+    }
+
+    setState(() {
+      isDataLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -88,7 +117,7 @@ class _HomeState extends State<Home> {
       return Row(
         children: [
           PieChart(country: selectedCountry),
-          Expanded(child: LineChart())
+          Expanded(child: LineChart(data: historicData))
         ],
       );
     }
@@ -100,7 +129,7 @@ class _HomeState extends State<Home> {
           SizedBox(
             height: 30,
           ),
-          LineChart()
+          LineChart(data: historicData)
         ],
       );
     }
@@ -120,6 +149,7 @@ class _HomeState extends State<Home> {
 
               setState(() {
                 selectedCountry = c;
+                fetchHistoricData(c);
               });
             },
           ),
@@ -164,7 +194,8 @@ class _HomeState extends State<Home> {
                           : "${selectedCountry.name} (${GlobalHelpers.formatNumbers(selectedCountry.confirmed)})",
                     ),
                     Expanded(
-                        child: Loading(loading: false, child: getContent())),
+                        child: Loading(
+                            loading: isDataLoading, child: getContent())),
                   ],
                 ),
               )
