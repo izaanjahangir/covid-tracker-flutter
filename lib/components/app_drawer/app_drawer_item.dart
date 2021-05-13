@@ -1,6 +1,7 @@
 import 'package:covid_tracker/models/country.dart';
 import "package:flutter/material.dart";
 import "package:covid_tracker/config/theme_colors.dart";
+import "package:covid_tracker/utils/global_helpers.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 
 class AppDrawerItem extends StatelessWidget {
@@ -44,7 +45,8 @@ class AppDrawerItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                Text("100000", style: TextStyle(fontSize: 14))
+                Text(GlobalHelpers.formatNumbers(country.confirmed),
+                    style: TextStyle(fontSize: 13))
               ],
             ),
           ),

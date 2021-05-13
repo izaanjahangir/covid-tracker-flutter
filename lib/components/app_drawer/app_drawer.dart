@@ -38,7 +38,7 @@ class AppDrawer extends StatelessWidget {
           ),
           Expanded(
               child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
             child: LayoutBuilder(
                 builder: (BuildContext context, BoxConstraints constraints) {
               return SingleChildScrollView(

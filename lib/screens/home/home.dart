@@ -103,7 +103,7 @@ class _HomeState extends State<Home> {
 
     Widget getAppDrawer() {
       return Container(
-        width: drawerWidth > 250 ? 250 : drawerWidth,
+        width: drawerWidth > 280 ? 280 : drawerWidth,
         child: Drawer(
           child: AppDrawer(
             countries: countries,
