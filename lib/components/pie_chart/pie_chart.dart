@@ -1,22 +1,45 @@
+import 'package:covid_tracker/models/country.dart';
 import "package:flutter/material.dart";
 import "package:covid_tracker/config/theme_colors.dart";
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class PieChart extends StatelessWidget {
+class PieChart extends StatefulWidget {
+  final Country country;
+
+  PieChart({this.country});
+
+  @override
+  _PieChartState createState() => _PieChartState();
+}
+
+class _PieChartState extends State<PieChart> {
+  String getPercentage(int lower, int higher) {
+    String value = ((lower / higher) * 100).toStringAsFixed(2);
+
+    return value + "%";
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final String activeCasesPercentage =
+        getPercentage(widget.country.activeCases, widget.country.confirmed);
+    final String recoveredPercentage =
+        getPercentage(widget.country.recovered, widget.country.confirmed);
+    final String deathsPercentage =
+        getPercentage(widget.country.deaths, widget.country.confirmed);
 
     final List<PieData> pieData = [
-      PieData("Deaths", 20),
-      PieData("Recovered", 10),
-      PieData("Total", 30),
+      PieData(
+          "Active cases", widget.country.activeCases, activeCasesPercentage),
+      PieData("Recovered", widget.country.recovered, recoveredPercentage),
+      PieData("Deaths", widget.country.deaths, deathsPercentage),
     ];
 
     return Container(
       height: size.height * 0.5,
       child: SfCircularChart(
-        palette: [ThemeColors.lightGreen, ThemeColors.purple],
+        palette: [ThemeColors.purple, ThemeColors.lightGreen, Colors.red],
         legend: Legend(isVisible: true),
         series: <PieSeries<PieData, String>>[
           PieSeries<PieData, String>(
@@ -24,7 +47,10 @@ class PieChart extends StatelessWidget {
               xValueMapper: (PieData data, _) => data.xData,
               yValueMapper: (PieData data, _) => data.yData,
               dataLabelMapper: (PieData data, _) => data.text,
-              dataLabelSettings: DataLabelSettings(isVisible: true)),
+              dataLabelSettings: DataLabelSettings(
+                  isVisible: true,
+                  useSeriesColor: true,
+                  labelPosition: ChartDataLabelPosition.outside)),
         ],
       ),
     );

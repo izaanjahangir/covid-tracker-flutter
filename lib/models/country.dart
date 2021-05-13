@@ -1,25 +1,47 @@
 import 'package:flutter/material.dart';
 
 class Country {
-  final String name;
-  final String flag;
-  final String code;
-  final int confirmed;
-  final int deaths;
-  final int recovered;
+  String name;
+  String flag;
+  String code;
+  int confirmed;
+  int deaths;
+  int recovered;
+  int activeCases;
 
   Country(
-      {@required this.name,
-      @required this.flag,
-      @required this.code,
-      this.confirmed,
-      this.deaths,
-      this.recovered});
+      {@required name,
+      @required flag,
+      @required code,
+      confirmed,
+      deaths,
+      recovered}) {
+    this.name = name;
+    this.flag = flag;
+    this.code = code;
+
+    if (confirmed != null) {
+      this.confirmed = confirmed;
+    }
+
+    if (deaths != null) {
+      this.deaths = deaths;
+    }
+
+    if (recovered != null) {
+      this.recovered = recovered;
+    }
+
+    if (confirmed != null && deaths != null && recovered != null) {
+      this.activeCases = confirmed - deaths - recovered;
+    }
+  }
 
   void printData() {
     print("----- Country: ${this.name} -----");
     print("confirmed: ${this.confirmed}");
     print("deaths: ${this.deaths}");
     print("recovered: ${this.recovered}");
+    print("activeCases: ${this.activeCases}");
   }
 }

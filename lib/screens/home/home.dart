@@ -7,6 +7,7 @@ import 'package:covid_tracker/config/constants.dart';
 import 'package:covid_tracker/models/country.dart';
 import 'package:covid_tracker/screens/home/components/no_country_selected.dart';
 import 'package:covid_tracker/utils/api.dart';
+import 'package:covid_tracker/utils/global_helpers.dart';
 import 'package:covid_tracker/utils/responsive.dart';
 import "package:flutter/material.dart";
 
@@ -85,14 +86,17 @@ class _HomeState extends State<Home> {
 
     Widget getDesktopView() {
       return Row(
-        children: [PieChart(), Expanded(child: LineChart())],
+        children: [
+          PieChart(country: selectedCountry),
+          Expanded(child: LineChart())
+        ],
       );
     }
 
     Widget getMobileView() {
       return Column(
         children: [
-          PieChart(),
+          PieChart(country: selectedCountry),
           SizedBox(
             height: 30,
           ),
@@ -155,7 +159,9 @@ class _HomeState extends State<Home> {
                 child: Column(
                   children: [
                     AppHeader(
-                      label: "Pakistan (1000)",
+                      label: selectedCountry == null
+                          ? ""
+                          : "${selectedCountry.name} (${GlobalHelpers.formatNumbers(selectedCountry.confirmed)})",
                     ),
                     Expanded(
                         child: Loading(loading: false, child: getContent())),
