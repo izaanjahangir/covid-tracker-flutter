@@ -18,7 +18,7 @@ class AppHeader extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      height: 50,
+      height: 60,
       color: ThemeColors.primary,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
@@ -28,7 +28,7 @@ class AppHeader extends StatelessWidget {
               onTap: openDrawer,
               child: Icon(
                 Icons.menu,
-                size: 25,
+                size: 35,
                 color: ThemeColors.white,
               ),
             ),

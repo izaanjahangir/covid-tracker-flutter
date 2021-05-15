@@ -27,13 +27,13 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 50,
+            height: 60,
             width: double.infinity,
             color: ThemeColors.primary,
             child: Center(
                 child: Text(
               "Select country",
-              style: TextStyle(fontSize: 16, color: ThemeColors.white),
+              style: TextStyle(fontSize: 18, color: ThemeColors.white),
             )),
           ),
           Expanded(
