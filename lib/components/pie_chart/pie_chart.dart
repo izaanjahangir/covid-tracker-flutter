@@ -40,7 +40,8 @@ class _PieChartState extends State<PieChart> {
       height: size.height * 0.5,
       child: SfCircularChart(
         palette: [ThemeColors.purple, ThemeColors.lightGreen, Colors.red],
-        legend: Legend(isVisible: true),
+        legend: Legend(
+            isVisible: true, textStyle: TextStyle(color: ThemeColors.white)),
         series: <PieSeries<PieData, String>>[
           PieSeries<PieData, String>(
               dataSource: pieData,

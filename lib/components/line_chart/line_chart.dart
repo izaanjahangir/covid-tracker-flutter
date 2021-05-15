@@ -1,3 +1,5 @@
+import 'package:covid_tracker/config/theme_colors.dart';
+import 'package:covid_tracker/utils/responsive.dart';
 import "package:flutter/material.dart";
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -10,11 +12,25 @@ class LineChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final _tooltipBehavior = TooltipBehavior(enable: true);
+    double labelSize = 8;
+
+    if (Responsive.isTablet(context)) {
+      labelSize = 10;
+    }
+
+    if (Responsive.isDesktop(context)) {
+      labelSize = 12;
+    }
 
     return Container(
         height: size.height * 0.5,
         child: SfCartesianChart(
-            primaryXAxis: CategoryAxis(),
+            primaryXAxis: CategoryAxis(
+                labelStyle:
+                    TextStyle(color: ThemeColors.white, fontSize: labelSize)),
+            primaryYAxis: CategoryAxis(
+                labelStyle:
+                    TextStyle(color: ThemeColors.white, fontSize: labelSize)),
             tooltipBehavior: _tooltipBehavior,
             series: <LineSeries<SalesData, String>>[
               LineSeries<SalesData, String>(

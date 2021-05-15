@@ -40,13 +40,18 @@ class AppDrawerItem extends StatelessWidget {
                       ),
                       Text(
                         country.name,
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(
+                            fontSize: 14,
+                            color:
+                                active ? ThemeColors.black : ThemeColors.white),
                       ),
                     ],
                   ),
                 ),
                 Text(GlobalHelpers.formatNumbers(country.confirmed),
-                    style: TextStyle(fontSize: 13))
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: active ? ThemeColors.black : ThemeColors.white))
               ],
             ),
           ),

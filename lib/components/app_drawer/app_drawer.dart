@@ -23,17 +23,17 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ThemeColors.lightGreen,
+      color: ThemeColors.secondary,
       child: Column(
         children: [
           Container(
             height: 50,
             width: double.infinity,
-            color: ThemeColors.white,
+            color: ThemeColors.primary,
             child: Center(
                 child: Text(
               "Select country",
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: ThemeColors.white),
             )),
           ),
           Expanded(

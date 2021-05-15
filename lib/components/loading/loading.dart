@@ -21,21 +21,24 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (loading) {
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SpinKitHourGlass(
-            color: color,
-            size: iconSize,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            label,
-            style: TextStyle(color: color, fontSize: labelFontSize),
-          )
-        ],
+      return Container(
+        color: ThemeColors.secondary,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SpinKitHourGlass(
+              color: color,
+              size: iconSize,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              label,
+              style: TextStyle(color: color, fontSize: labelFontSize),
+            )
+          ],
+        ),
       );
     }
 

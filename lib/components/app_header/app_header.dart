@@ -19,7 +19,7 @@ class AppHeader extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 50,
-      color: ThemeColors.purple,
+      color: ThemeColors.primary,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         children: [

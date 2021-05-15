@@ -4,6 +4,7 @@ import 'package:covid_tracker/components/line_chart/line_chart.dart';
 import 'package:covid_tracker/components/loading/loading.dart';
 import 'package:covid_tracker/components/pie_chart/pie_chart.dart';
 import 'package:covid_tracker/config/constants.dart';
+import 'package:covid_tracker/config/theme_colors.dart';
 import 'package:covid_tracker/models/country.dart';
 import 'package:covid_tracker/screens/home/components/no_country_selected.dart';
 import 'package:covid_tracker/utils/api.dart';
@@ -165,6 +166,7 @@ class _HomeState extends State<Home> {
             constraints: BoxConstraints(minHeight: constraints.maxHeight),
             child: Container(
               width: double.infinity,
+              color: ThemeColors.secondary,
               child: selectedCountry != null
                   ? Responsive(
                       mobile: getMobileView(),
