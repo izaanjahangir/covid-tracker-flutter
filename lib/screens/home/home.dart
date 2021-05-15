@@ -183,6 +183,7 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         drawer: Responsive.isDesktop(context) ? null : getAppDrawer(),
         body: Container(
+          color: ThemeColors.secondary,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
